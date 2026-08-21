@@ -49,6 +49,31 @@ def mashup_backed(table):
                for p in table.get("partitions", []))
 
 
+def check_field_types(unapplied):
+    """UnappliedChanges is deserialised into typed objects; DataModelSchema is not.
+
+    A multi-line description is an array of lines in DataModelSchema and a
+    single string with newlines in UnappliedChanges. Setting both from one list
+    produces a file that opens as "encrypted or corrupted", with the real cause
+    buried four exceptions deep:
+
+        Error reading string. Unexpected token: StartArray.
+        Path 'queries[1].description'
+
+    `text` is legitimately an array. Everything else here should be scalar.
+    """
+    problems = []
+    for i, q in enumerate(unapplied.get("queries", [])):
+        for key, value in q.items():
+            if key == "text":
+                continue
+            if isinstance(value, (list, dict)):
+                problems.append(
+                    f"queries[{i}] {q.get('name')}.{key} is "
+                    f"{type(value).__name__}, expected a scalar")
+    return problems
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
@@ -93,8 +118,12 @@ def main():
                   f"({len(only_unapplied)}): {', '.join(only_unapplied)}")
             problems += len(only_unapplied)
 
+        for bad in check_field_types(unapplied):
+            print(f"  BAD FIELD TYPE: {bad}")
+            problems += 1
+
         if not problems:
-            print("  the two lists agree")
+            print("  the two lists agree, field types are scalar")
         rc |= 1 if problems else 0
     return rc
 
