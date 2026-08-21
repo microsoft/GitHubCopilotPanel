@@ -54,7 +54,7 @@ Pointing it at your own data means changing **one parameter**. See
 
 ## The four parameters
 
-| Parameter | Ships as | Read when |
+| Parameter | Default | Read when |
 |---|---|---|
 | `DataSource` | `CSV` | always — set to `Viva` for the direct connector |
 | `DataFolder` | `C:\GitHub Copilot Panel\Data` | `DataSource = "CSV"` |
@@ -98,20 +98,33 @@ needs an explicit uplift assumption rather than a measured one. See
 
 ## Every assumption lives in `config`
 
-| Column | Ships as | What it does |
+> ### **These are placeholders, not recommendations.**
+>
+> This is a template. Every number below is a **dummy value** chosen so the
+> synthetic sample renders a complete report. None of them is a Microsoft
+> benchmark, a price list, a salary guide, or a research finding. **Replace all
+> of them with your own figures before showing this to anyone.**
+
+| Column | Placeholder | You must supply |
 |---|---|---|
-| `deep_user_uplift` | 18.4% | **the** behavioural assumption |
-| `output_metric` | PRs merged per week | names the unit that uplift is in |
-| `loaded_annual_cost` | $150,000 | converts capacity to money |
-| `deep_user_threshold` | 10% | delegation share needed to count as deep |
-| `habit_weeks_required` | 3 | active weeks in trailing 4 to count as habitual |
-| `seats_purchased` | 1,400 | investment |
-| `seat_unit_cost` | $39 | investment |
-| `enablement_cost` | $42,000 | investment |
-| `is_synthetic` | 1 | drives the provenance banner |
+| `deep_user_uplift` | `0.184` | **The one behavioural assumption.** Not measured by this data — see [INTERPRETING.md](docs/INTERPRETING.md) for how to establish it |
+| `output_metric` | *PRs merged per week* | The unit that uplift is expressed in |
+| `loaded_annual_cost` | `150000` | Your fully-loaded annual cost per engineer |
+| `deep_user_threshold` | `0.10` | Delegation share needed to count as deep |
+| `habit_weeks_required` | `3` | Active weeks in the trailing window to count as habitual |
+| `habit_window_weeks` | `4` | Length of that window |
+| `seats_purchased` | `1400` | Your seat count |
+| `seat_unit_cost` | `39` | **Your** contracted rate — not a list price |
+| `enablement_cost` | `42000` | Your one-off rollout cost |
+| `is_synthetic` | `1` | Set to `0` on real data, or the report keeps calling it synthetic |
+
+The three thresholds are defensible starting points and are documented as such.
+**The three costs and the uplift are arbitrary.** They exist so the sample
+produces a number, not because anyone recommends them.
 
 Nothing numeric is hardcoded in a visual. Change a config value and every label,
-subtitle, verdict and narrative follows. That is the whole design.
+subtitle, verdict and narrative follows. That is the whole design — and it is why
+replacing these takes minutes, not a rebuild.
 
 ---
 

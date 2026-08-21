@@ -30,7 +30,8 @@ navigator's list would finish that feature for everyone.
 [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md) no longer matches what you see, that is a
 genuinely valuable issue — please include what you saw instead.
 
-**A measured `deep_user_uplift`.** The value model ships an assumption at 18.4%. If you
+**A measured `deep_user_uplift`.** The value model ships a dummy placeholder at 18.4%,
+chosen so the sample renders rather than because anyone recommends it. If you
 have run a within-person pre/post and have a defensible figure with its method, that is
 worth more than any code change in this repo. See
 [docs/INTERPRETING.md](docs/INTERPRETING.md) for the design that avoids confounding it

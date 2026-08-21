@@ -19,6 +19,13 @@ can prove that people changed how they work, and it can price that change, but i
 measure the change in what they produced. `deep_user_uplift` is the bridge, and it ships
 as a placeholder at 18.4%.
 
+**Where did 18.4% come from?** Nowhere defensible. It is a dummy value chosen so the
+synthetic sample produces a plausible-looking number. It is not a Microsoft benchmark, not
+an industry figure, and not derived from any study. The same is true of the three cost
+placeholders — `loaded_annual_cost`, `seat_unit_cost` and `enablement_cost`. They exist so
+the template renders. **Every one of them is yours to replace, and none of them should
+survive contact with a real audience.**
+
 **Establish it properly with a within-person pre/post.** Take the same engineer's PR rate
 in the 8 weeks before they crossed the delegation threshold, against the 8 weeks after.
 Same person, same team, same codebase — so seniority cannot confound it.
