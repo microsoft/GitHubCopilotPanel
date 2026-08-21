@@ -55,14 +55,28 @@ Already handled if you keep the filename. The README references it at
 
 ## 4. Upload and embed the video
 
+**This is the one step that cannot be automated.** It was tested rather than
+assumed: `POST /upload/policies/assets` returns 422 for token auth because it
+needs a browser session and CSRF token, and every alternative URL form —
+release download, `raw.githubusercontent.com`, `/raw/`, `/blob/` — was rendered
+through the real README pipeline and produced a plain `<a>`, never a `<video>`.
+
+Only a `user-attachments` URL works. GitHub rewrites it server-side into
+`<video src="https://private-user-images.githubusercontent.com/...?jwt=...">`.
+
 1. Go to any issue or PR comment box on github.com — **do not submit it**
 2. Drag `media/GitHubCopilotPanel-Demo.mp4` in and wait for the upload to finish
 3. Copy the `https://github.com/user-attachments/assets/...` URL it inserts
-4. Paste that URL into the README **on its own line**, no markdown link syntax around it
+4. Paste that URL into the README **on its own line**, no markdown link syntax
+   around it, replacing the poster image link
 5. Discard the comment
 
-A bare URL on its own line is what triggers the player. Wrapping it in `[]()` gives you
-a link.
+A bare URL on its own line is what triggers the player. Wrapping it in `[]()`
+gives you a link.
+
+Until that is done, `Images/GitHubCopilotPanel-VideoPoster.png` stands in — the
+title card with a play button, linked to the release asset. Regenerate it with
+`python docs/scripts/make_poster.py` if the title or duration changes.
 
 ---
 

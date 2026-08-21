@@ -13,13 +13,18 @@ Seven pages, 120 measures, every assumption in one table.
 
 **Intro — what the report covers, page by page** *(2m 18s)*
 
-<!-- To make this play inline, drag media/GitHubCopilotPanel-Demo.mp4 into any
-     GitHub comment box, copy the github.com/user-attachments URL it generates,
-     and replace the line below with that bare URL on its own line.
-     A repo-relative path renders as a download link, never a player.
+<!-- An inline player needs a github.com/user-attachments URL, and those are only
+     minted by GitHub's web uploader - the endpoint rejects token auth, so this
+     could not be done from the API. Release-download, raw.githubusercontent,
+     /raw/ and /blob/ URLs were all tested against the real README rendering
+     pipeline and every one renders as a plain link.
+
+     To turn this into a player: drag media/GitHubCopilotPanel-Demo.mp4 into any
+     GitHub comment box, wait for the upload, copy the user-attachments URL, and
+     replace the poster link below with that bare URL on its own line.
      See docs/PREVIEW.md. -->
 
-[Download the intro video](media/GitHubCopilotPanel-Demo.mp4) *(4.1 MB)*
+[![Watch the intro video](Images/GitHubCopilotPanel-VideoPoster.png)](https://github.com/microsoft/GitHubCopilotPanel/releases/download/v1.0.0/GitHubCopilotPanel-Demo.mp4)
 
 ---
 
