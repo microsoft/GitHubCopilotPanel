@@ -104,6 +104,7 @@ subtitle, verdict and narrative follows. That is the whole design.
 | [MEASURES.md](docs/MEASURES.md) | All 120 measures, by folder |
 | [INTERPRETING.md](docs/INTERPRETING.md) | What the numbers mean and how they mislead |
 | [BUILD.md](docs/BUILD.md) | Exporting a new `.pbit` |
+| [PREVIEW.md](docs/PREVIEW.md) | Making the preview GIF and the intro video |
 | [TESTING.md](docs/TESTING.md) | The checks, and the failure each one prevents |
 
 ---
