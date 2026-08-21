@@ -9,6 +9,18 @@ Seven pages, 120 measures, every assumption in one table.
 
 ![GitHub Copilot Panel](Images/GitHubCopilotPanel-Preview.gif)
 
+## Watch first
+
+**Intro — what the report covers, page by page** *(2m 07s)*
+
+<!-- To make this play inline, drag media/GitHubCopilotPanel-Demo.mp4 into any
+     GitHub comment box, copy the github.com/user-attachments URL it generates,
+     and replace the line below with that bare URL on its own line.
+     A repo-relative path renders as a download link, never a player.
+     See docs/PREVIEW.md. -->
+
+[Download the intro video](media/GitHubCopilotPanel-Demo.mp4) *(4.6 MB)*
+
 ---
 
 > ### This proves behaviour change, not output change.
