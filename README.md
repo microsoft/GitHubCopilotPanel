@@ -7,6 +7,8 @@ feed it: a local CSV export, or the Viva Insights connector direct.
 
 Seven pages, 120 measures, every assumption in one table.
 
+![GitHub Copilot Panel](Images/GitHubCopilotPanel-Preview.gif)
+
 ---
 
 > ### This proves behaviour change, not output change.
