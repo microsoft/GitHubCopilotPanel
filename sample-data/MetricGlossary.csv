@@ -1,0 +1,35 @@
+Group,Metric,What it means,How it is derived,Basis
+1 Reach,Activation,Share of seats that produced any activity.,Active users / licensed users,Counted
+1 Reach,Active users,Used Copilot at least once in the period.,Distinct people with any suggestion or chat request,Counted
+1 Reach,Agent adoption (GitHub),GitHub's own flag for people who have adopted agents.,Distinct people flagged / active users,"Counted, vendor definition"
+1 Reach,Habit conversion,How many of those who tried it kept going.,Habitual / active users,Counted
+1 Reach,Habitual users,"Uses it as part of the working week, not occasionally.",Active in 3 of the trailing 4 weeks,"Counted, threshold set in config"
+1 Reach,Licensed users,Everyone holding a seat in the period.,Distinct people in the extract,Counted
+1 Reach,Produced nothing,Seats that generated no activity at all.,Licensed - active users,Counted
+2 Depth,Deep users,People who delegate rather than only autocomplete.,Own delegation rate above 10%,"Counted, threshold set in config"
+2 Depth,Delegated interactions,"Actions where a whole task is handed over, not a suggestion accepted.","Interactions in agent, CLI, plan and app surfaces","Counted, classification in config"
+2 Depth,Delegation rate,How much of what people do is real delegation.,Delegated / all interactions,Counted
+2 Depth,Depth conversion,"Of those with the habit, how many got deep.",Deep / habitual users,Counted
+2 Depth,Habit but not deep,The population a depth programme would target.,Habitual - deep users,Counted
+2 Depth,Interactions,Every recorded Copilot action.,Sum of usage across all surfaces,Counted
+2 Depth,Our deep user share,"Deep users as a share of active, so it is comparable with GitHub's flag.",Deep users / active users,"Counted, threshold set in config"
+3 Value,Capacity gained,"Extra output from deep users, expressed as headcount.",Deep users x uplift,Assumption x count
+3 Value,Deep user uplift,How much more a deep user produces than a matched peer.,Customer input - the ONE behavioural assumption,ASSUMED
+3 Value,Idle seat cost,Paid for seats that produced nothing.,Produced nothing x seat cost x months,Counted x customer input
+3 Value,Investment,What has been spent in the period shown.,Seats x seat cost x months + enablement,Customer input
+3 Value,Net value,Value realised less investment.,Value realised - investment,Assumption x count
+3 Value,ROI,Return on the period's spend.,Net value / investment,Assumption x count
+3 Value,Still on the table,The prize for moving people who already have the habit.,(Habitual - deep) x uplift,Assumption x count
+3 Value,Value realised,"That capacity in money, for the period shown.",Capacity x loaded annual cost x months / 12,Assumption x count
+4 Quality,Completion acceptance,Share of offered code completions the developer kept.,Accepted / suggested completions,Counted
+4 Quality,Quality gap,Whether delegating more means accepting worse code.,Acceptance among deep users less everyone else,Counted
+5 Models,Deep vs everyone else,How much more of their work deep users send to frontier models.,Powerful share among deep users less everyone else,Counted
+5 Models,Model families in use,How many vendors the estate routes to.,Distinct vendor values in the period,Counted
+5 Models,Models in use,Distinct models the estate actually routed to.,Distinct model values in the period,Counted
+5 Models,Powerful model share,How much work goes to a frontier model rather than a fast one.,Interactions on Powerful-class models / all,Counted
+5 Models,Top vendor share,Concentration on the single largest vendor.,Largest vendor's interactions / all,Counted
+5 Models,Unclassified routing,"Work sent to auto or unknown model routing, so it cannot be priced by tier.",Interactions on unclassified models / all,Counted
+6 Languages,Language breadth,How varied a person's work is.,Average distinct languages per person,Counted
+6 Languages,Language delegation rate,Delegation within a single stack - where whole tasks are trusted.,Delegated / all interactions naming that language,"Counted, classification in config"
+6 Languages,Language interactions,Interactions that name a language. Lower than total - not every surface reports one.,Sum of usage by language and feature,Counted
+6 Languages,Languages in use,Distinct languages seen. Variant spellings count separately - a data quality signal.,Distinct language values in the period,Counted

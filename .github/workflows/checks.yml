@@ -1,0 +1,115 @@
+name: Checks
+
+# The template is a binary, so nothing here can prove it renders. What these
+# checks can do is catch the three things that have actually gone wrong:
+# a parameter shipping with a real value in it, the two query lists inside the
+# .pbit falling out of step, and a real export being committed as sample data.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Template parameters are at their shipping defaults
+        run: python docs/scripts/check_pbit_defaults.py "GitHub Copilot Panel.pbit"
+
+      - name: The two query lists inside the template agree
+        run: python docs/scripts/check_unapplied_sync.py "GitHub Copilot Panel.pbit"
+
+      - name: Sample data carries no real identifiers
+        run: |
+          # The sample set is synthetic. This catches a real export being
+          # committed by accident, which matters more than any other check here.
+          if grep -rIlE '@([a-zA-Z0-9-]+\.)?(microsoft|onmicrosoft)\.com' --include='*.csv' .; then
+            echo "A CSV contains what looks like a real tenant address."
+            exit 1
+          fi
+          echo "no real-looking addresses in committed CSVs"
+
+      - name: Sample data is the expected shape
+        run: |
+          python - <<'PY'
+          import csv, glob, os, sys
+
+          # A truncated or half-regenerated sample set is worse than none: the
+          # report loads, renders, and quietly shows a population nobody meant.
+          EXPECTED = {
+              "PersonGitHubActivityMetrics.csv": "PersonId",
+              "GitHubActivityBreakdownByFeatureMetrics.csv": "PersonId",
+              "GitHubActivityBreakdownByModelFeatureMetrics.csv": "PersonId",
+              "GitHubActivityBreakdownByLanguageFeatureMetrics.csv": "PersonId",
+              "GitHubActivityBreakdownByLanguageModelMetrics.csv": "PersonId",
+              "PeopleMetaData.csv": "PeopleHistoricalId",
+          }
+          bad = 0
+          people = None
+          for name, key in EXPECTED.items():
+              path = os.path.join("sample-data", name)
+              if not os.path.exists(path):
+                  print(f"MISSING {path}")
+                  bad += 1
+                  continue
+              with open(path, encoding="utf-8-sig", newline="") as fh:
+                  reader = csv.DictReader(fh)
+                  if key not in (reader.fieldnames or []):
+                      print(f"{name}: no {key} column")
+                      bad += 1
+                      continue
+                  ids = {r[key][:36] for r in reader}
+              print(f"{name}: {len(ids)} people")
+              if people is None:
+                  people = ids
+              elif not ids <= people:
+                  # A fact row for a person the dimension does not know about
+                  # produces a blank row in every org breakdown.
+                  print(f"{name}: {len(ids - people)} people absent from the person set")
+                  bad += 1
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Every internal doc link resolves
+        run: |
+          python - <<'PY'
+          import os, re, sys, urllib.parse
+
+          LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
+          missing, ok = [], 0
+
+          for dirpath, dirnames, filenames in os.walk("."):
+              if ".git" in dirpath:
+                  continue
+              for fn in filenames:
+                  if not fn.endswith(".md"):
+                      continue
+                  path = os.path.join(dirpath, fn)
+                  text = open(path, encoding="utf-8").read()
+                  for label, target in LINK.findall(text):
+                      t = target.split("#")[0].strip()
+                      if not t or t.startswith(("http", "mailto:")):
+                          continue
+                      # ../../issues and friends resolve on github.com only
+                      if "issues" in t or "stargazers" in t:
+                          continue
+                      t = urllib.parse.unquote(t)
+                      resolved = os.path.normpath(os.path.join(dirpath, t))
+                      if os.path.exists(resolved):
+                          ok += 1
+                      else:
+                          missing.append((path, label, target))
+
+          print(f"{ok} internal links resolve")
+          for f, label, target in missing:
+              print(f"BROKEN  {f}: [{label}] -> {target}")
+          sys.exit(1 if missing else 0)
+          PY
