@@ -52,7 +52,7 @@ Whether the work itself changed.
 | `Months in Context` | pro-rates annual capacity to the window on screen — omit it and ROI inflates ~3× |
 | `Value Realised` | capacity × loaded cost × months/12 |
 | `Value on the Table` | the headroom equivalent |
-| `Seats`, `Total Investment`, `Idle Seat Cost`, `Cost per Deep User` | investment side |
+| `Seats`, `Total Investment`, `Idle Seat Cost`, `Cost per Deep User` | investment side. `Total Investment` is licence cost — `enablement_cost` ships at zero and is amortised over 12 months if you set it |
 | `Net Value`, `ROI %` | the two figures people quote — read [INTERPRETING.md](INTERPRETING.md) first |
 
 ## 4 Quality (8)

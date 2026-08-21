@@ -21,10 +21,30 @@ as a placeholder at 18.4%.
 
 **Where did 18.4% come from?** Nowhere defensible. It is a dummy value chosen so the
 synthetic sample produces a plausible-looking number. It is not a Microsoft benchmark, not
-an industry figure, and not derived from any study. The same is true of the three cost
-placeholders — `loaded_annual_cost`, `seat_unit_cost` and `enablement_cost`. They exist so
-the template renders. **Every one of them is yours to replace, and none of them should
-survive contact with a real audience.**
+an industry figure, and not derived from any study. `loaded_annual_cost` is the same — a
+plausible figure, not a recommendation. (`seat_unit_cost` is the one exception: `39` is the
+published GitHub Copilot Enterprise per-seat price, but your contracted rate is what
+matters.) **All of them are yours to replace, and none should survive contact with a real
+audience.**
+
+## Total Investment is licence cost, and that is deliberate
+
+    Total Investment = seats × seat_unit_cost × months
+                     + enablement_cost × months/12
+
+`enablement_cost` ships at **zero**, so by default the investment side is licence cost
+alone. That is the number every reader can compute and defend.
+
+It was originally a placeholder at $42,000, which was the one value in `config` with no
+source at all — a seat price can be looked up and a loaded cost can be got from HR, but
+training, champion time and rollout effort are almost never tracked as a line item. An
+invented number flowing straight into ROI is worse than an absent one.
+
+It also carried a real defect. Every other term in the value model is scaled by
+`Months in Context`; the enablement term was added flat. With the old placeholders that
+made enablement **43% of total investment on a one-month view and 11% on a six-month
+view** — same rollout, same reality, ROI lurching because of the date slicer. It is now
+amortised over twelve months like everything else, so if you do set it, it behaves.
 
 **Establish it properly with a within-person pre/post.** Take the same engineer's PR rate
 in the 8 weeks before they crossed the delegation threshold, against the 8 weeks after.

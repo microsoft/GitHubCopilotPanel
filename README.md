@@ -100,27 +100,47 @@ needs an explicit uplift assumption rather than a measured one. See
 
 > ### **These are placeholders, not recommendations.**
 >
-> This is a template. Every number below is a **dummy value** chosen so the
+> This is a template. The values below are **dummy defaults** chosen so the
 > synthetic sample renders a complete report. None of them is a Microsoft
-> benchmark, a price list, a salary guide, or a research finding. **Replace all
-> of them with your own figures before showing this to anyone.**
+> benchmark, a salary guide, or a research finding. **Replace them with your own
+> figures before showing this to anyone.**
 
-| Column | Placeholder | You must supply |
+**Two costs. That's all the report needs.**
+
+| Column | Placeholder | What it is |
 |---|---|---|
-| `deep_user_uplift` | `0.184` | **The one behavioural assumption.** Not measured by this data — see [INTERPRETING.md](docs/INTERPRETING.md) for how to establish it |
-| `output_metric` | *PRs merged per week* | The unit that uplift is expressed in |
-| `loaded_annual_cost` | `150000` | Your fully-loaded annual cost per engineer |
-| `deep_user_threshold` | `0.10` | Delegation share needed to count as deep |
-| `habit_weeks_required` | `3` | Active weeks in the trailing window to count as habitual |
-| `habit_window_weeks` | `4` | Length of that window |
-| `seats_purchased` | `1400` | Your seat count |
-| `seat_unit_cost` | `39` | **Your** contracted rate — not a list price |
-| `enablement_cost` | `42000` | Your one-off rollout cost |
-| `is_synthetic` | `1` | Set to `0` on real data, or the report keeps calling it synthetic |
+| `seat_unit_cost` | `39` | What you pay per seat per month. `39` is GitHub Copilot Enterprise list; Business is `19`. **Use your contracted rate.** |
+| `loaded_annual_cost` | `150000` | Fully-loaded annual cost of one engineer — salary, benefits, overhead. The only thing that converts capacity into money. |
 
-The three thresholds are defensible starting points and are documented as such.
-**The three costs and the uplift are arbitrary.** They exist so the sample
-produces a number, not because anyone recommends them.
+Plus a seat count, because the export cannot tell you who holds a licence and
+never used it:
+
+| Column | Placeholder | What it is |
+|---|---|---|
+| `seats_purchased` | `200` | Matches the sample. Set it to your real seat count. |
+
+**The one behavioural assumption:**
+
+| Column | Placeholder | What it is |
+|---|---|---|
+| `deep_user_uplift` | `0.184` | How much more a deep user produces. **Not measured by this data.** See [INTERPRETING.md](docs/INTERPRETING.md) for how to establish it honestly |
+| `output_metric` | *PRs merged per week* | The unit that uplift is expressed in |
+
+**Method thresholds** — defensible starting points, change them if your
+definition differs:
+
+| Column | Placeholder | What it is |
+|---|---|---|
+| `deep_user_threshold` | `0.10` | Delegation share needed to count as deep |
+| `habit_weeks_required` | `3` | Active weeks in the trailing window |
+| `habit_window_weeks` | `4` | Length of that window |
+
+**Optional:**
+
+| Column | Placeholder | What it is |
+|---|---|---|
+| `enablement_cost` | `0` | One-off rollout cost, amortised over 12 months. Ships at zero — set it only if you actually track the number |
+| `is_synthetic` | `1` | Set to `0` on real data, or the report keeps calling it synthetic |
 
 Nothing numeric is hardcoded in a visual. Change a config value and every label,
 subtitle, verdict and narrative follows. That is the whole design — and it is why
