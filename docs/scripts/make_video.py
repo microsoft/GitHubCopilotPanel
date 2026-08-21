@@ -29,23 +29,43 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cards  # noqa: E402
+
 VOICE = "en-US-BrianMultilingualNeural"
 CANVAS = "1920:1080"
-BG = "0xF6F8FB"          # the report's own canvas colour, so the pillarbox vanishes
+BG = "0x1C2630"          # the card background, so a page cut has no colour jump
 TAIL = 0.9               # seconds of held frame after the line ends
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "media" / "GitHubCopilotPanel-Demo.mp4"
 
-# One beat per page. Written to be spoken, not read - short sentences and no
+TITLE = ("Microsoft Open Source", "GitHub Copilot Panel",
+         "Adoption, depth, and what the depth is worth")
+
+END = ("Get it", "Find it on GitHub", "microsoft / GitHubCopilotPanel",
+       ["It measures behaviour, not output.",
+        "Every assumption is yours to set."])
+
+# One beat per card. Written to be spoken, not read - short sentences and no
 # subordinate clauses. No figures: see the narration rule above.
+#
+# "title" and "end" are generated cards; everything else is a report page
+# rendered onto the same dark background. The reference videos open and close
+# on cards and put the walkthrough in between, so this does too.
 SEGMENTS = [
-    ("00-start.png",
+    ("title",
      "Every Copilot dashboard tells you that usage went up. "
      "None of them tell you whether the work actually changed. "
      "GitHub Copilot Panel is a Power BI template that answers that question, "
      "in seven pages, built on the Viva Insights GitHub Copilot export. "
-     "The figures you're about to see are synthetic sample data."),
+     "Everything you're about to see runs on synthetic sample data."),
+
+    ("00-start.png",
+     "Start here is the page most reports leave out. "
+     "What the template is for, how to read it, "
+     "and the two models it depends on, stated up front "
+     "rather than buried in a footnote."),
 
     ("01-exec.png",
      "The executive summary is the whole story in one screen. "
@@ -82,9 +102,12 @@ SEGMENTS = [
     ("06-appendix.png",
      "Every assumption lives in one config table. "
      "Change a threshold and every subtitle, verdict and narrative "
-     "rewrites itself. Nothing numeric is hardcoded in a visual. "
+     "rewrites itself. Nothing numeric is hardcoded in a visual."),
+
+    ("end",
      "Point it at your own export, and the report reads your estate "
-     "instead of the sample."),
+     "instead of the sample. "
+     "It's on GitHub now, with the sample data, so you can see it working today."),
 ]
 
 
@@ -116,10 +139,20 @@ def main():
         tmp = Path(tmp)
         parts, total = [], 0.0
 
-        for i, (img, text) in enumerate(SEGMENTS):
-            src = frames / img
-            if not src.exists():
-                sys.exit(f"missing frame: {src}")
+        for i, (slide, text) in enumerate(SEGMENTS):
+            # Cards are generated; anything else is a page render placed on the
+            # same background. Both leave a 1920x1080 PNG, so the encode below
+            # does not need to care which it got.
+            still = tmp / f"{i:02d}.png"
+            if slide == "title":
+                cards.title_card(*TITLE).save(still)
+            elif slide == "end":
+                cards.end_card(*END).save(still)
+            else:
+                src = frames / slide
+                if not src.exists():
+                    sys.exit(f"missing frame: {src}")
+                cards.page_card(src).save(still)
 
             mp3 = tmp / f"{i:02d}.mp3"
             run([sys.executable, "-m", "edge_tts", "--voice", VOICE,
@@ -131,11 +164,9 @@ def main():
             part = tmp / f"{i:02d}.mp4"
             run([
                 "ffmpeg", "-y", "-loglevel", "error",
-                "-loop", "1", "-i", str(src),
+                "-loop", "1", "-i", str(still),
                 "-i", str(mp3),
                 "-filter_complex",
-                # Fit the 1.73 page onto 16:9 and fill the sides with the
-                # report's own background rather than black bars.
                 f"[0:v]scale={CANVAS}:force_original_aspect_ratio=decrease,"
                 f"pad={CANVAS}:(ow-iw)/2:(oh-ih)/2:color={BG},setsar=1,"
                 f"fps=30[v];"
@@ -148,7 +179,7 @@ def main():
                 str(part),
             ])
             parts.append(part)
-            print(f"  {img:16} speech {speech:5.1f}s  slide {length:5.1f}s")
+            print(f"  {slide:16} speech {speech:5.1f}s  slide {length:5.1f}s")
 
         listing = tmp / "parts.txt"
         listing.write_text(
