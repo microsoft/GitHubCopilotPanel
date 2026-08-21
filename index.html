@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub Copilot Panel — intro video</title>
+<meta name="description" content="A Power BI template for GitHub Copilot adoption, engagement depth and realised value.">
+<meta property="og:title" content="GitHub Copilot Panel — intro video">
+<meta property="og:type" content="video.other">
+<meta property="og:video" content="GitHubCopilotPanel-Demo.mp4">
+<meta property="og:image" content="GitHubCopilotPanel-VideoPoster.png">
+<style>
+  :root {
+    --bg: #1C2630;
+    --accent: #09B39D;
+    --eyebrow: #4F73B8;
+    --sub: #C4CED8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .rule { height: 9px; background: var(--accent); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 24px 80px; }
+  .eyebrow {
+    color: var(--eyebrow); font-weight: 700; font-size: 15px;
+    letter-spacing: .14em; text-transform: uppercase; margin: 0 0 22px;
+  }
+  h1 { font-size: 46px; font-weight: 700; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sub { color: var(--sub); font-size: 21px; margin: 0 0 34px; }
+  video {
+    width: 100%; display: block; border-radius: 8px;
+    background: #000; box-shadow: 0 18px 48px rgba(0,0,0,.45);
+  }
+  .meta { color: #8793A3; font-size: 15px; margin: 16px 0 40px; }
+  .links { display: flex; gap: 14px; flex-wrap: wrap; }
+  a.btn {
+    display: inline-block; padding: 13px 22px; border-radius: 7px;
+    text-decoration: none; font-weight: 600; font-size: 16px;
+  }
+  a.primary { background: var(--accent); color: #10202a; }
+  a.ghost { border: 1px solid #3A4756; color: #E6EDF5; }
+  a.btn:hover { filter: brightness(1.08); }
+  .note {
+    margin-top: 46px; padding-top: 24px; border-top: 1px solid #2C3846;
+    color: #8793A3; font-size: 15px; line-height: 1.65;
+  }
+  .note strong { color: #C4CED8; }
+</style>
+</head>
+<body>
+<div class="rule"></div>
+<div class="wrap">
+  <p class="eyebrow">Microsoft Open Source</p>
+  <h1>GitHub Copilot Panel</h1>
+  <p class="sub">Adoption, depth, and what the depth is worth</p>
+
+  <video controls preload="metadata" playsinline
+         poster="GitHubCopilotPanel-VideoPoster.png">
+    <source src="GitHubCopilotPanel-Demo.mp4" type="video/mp4">
+    Your browser cannot play this video.
+    <a href="GitHubCopilotPanel-Demo.mp4">Download it instead</a>.
+  </video>
+
+  <p class="meta">2 min 18 sec · runs on synthetic sample data</p>
+
+  <div class="links">
+    <a class="primary btn" href="https://github.com/microsoft/GitHubCopilotPanel">View the repository</a>
+    <a class="ghost btn" href="https://github.com/microsoft/GitHubCopilotPanel/releases/latest">Download the template</a>
+  </div>
+
+  <p class="note">
+    This report proves <strong>behaviour change</strong>, not <strong>output change</strong>.
+    It shows people moving from autocomplete to delegation, and prices that movement.
+    The bridge between the two is an assumption you set, not a finding the data measured.
+  </p>
+</div>
+</body>
+</html>
