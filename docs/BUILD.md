@@ -86,7 +86,6 @@ looks like a real path, tenant or address leaking into a default.
 
 Sometimes it is cleaner to fix a parameter default by editing the package than by
 round-tripping through Desktop. Two things will silently ruin the file:
-
 **Encoding.** Package parts are UTF-16LE without a BOM as often as they are UTF-8.
 Write a part back in the wrong encoding and Desktop cannot open it. Sniff each part and
 preserve what you found.
@@ -98,3 +97,56 @@ Also worth preserving: `DataModelSchema` is written indent-2 with CRLF, and
 `UnappliedChanges` is compact with no spaces after separators. Re-serialising with a
 different shape produces an 80KB diff for a two-string edit, which makes the change
 unreviewable.
+
+---
+
+## Setting the value assumptions
+
+Four numbers drive the whole value model. Three are plain figures; the fourth is
+the uplift, which is the one people get wrong.
+
+**The uplift is a what-if parameter.** `Uplift` is a calculated table
+(`GENERATESERIES(0, 0.5, 0.005)`) formatted as a percentage, and
+`[Deep User Uplift]` reads it:
+
+```
+Deep User Uplift = SELECTEDVALUE( 'Uplift'[Uplift], MAX( config[deep_user_uplift] ) )
+```
+
+`SELECTEDVALUE` falls back to `config[deep_user_uplift]`, so the report renders
+correctly whether or not a slider is on the canvas.
+
+**To put the slider on the Value page**, drag `Uplift[Uplift]` onto page 5 from
+the Data pane and set the visual to Slicer. It reads 0.0%–50.0%, so there is no
+decimal to mistype — the old `config` column held `0.184` while every visual
+displayed `18.4%`, which is a trap worth removing.
+
+The other three stay in `config` and are edited in Model view: select the column
+and change the literal.
+
+| Column | What it is |
+|---|---|
+| `loaded_annual_cost` | Fully-loaded annual cost of one engineer |
+| `seat_unit_cost` | Your contracted per-seat monthly rate |
+| `seats_purchased` | Seat count — the export cannot tell you who holds an unused licence |
+
+## Do not add visuals by editing the .pbit
+
+A visual added by writing a `visual.json` into the package is rejected on open:
+
+```
+This file is corrupted or was created by an unrecognized version of Power BI Desktop.
+  ExplorationSerializer.CollectVisualFilesAsync -> HandleVisualFile
+```
+
+That was reproduced four times, including with a file cloned from a working
+slicer on the same page — differing only in its name, position and bound field,
+and serialised in the same compact JSON as every other visual file. A structural
+diff against the donor showed no extra keys, no missing keys, and only the
+intended value changes. It still failed.
+
+Model-only edits to the same package are fine: the `Uplift` table above was
+added exactly that way and opens. Whatever the report side validates against, a
+structurally identical file does not satisfy it.
+
+**Add visuals in Desktop and re-export.**

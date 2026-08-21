@@ -52,6 +52,8 @@ def mashup_backed(table):
 def check_field_types(unapplied):
     """UnappliedChanges is deserialised into typed objects; DataModelSchema is not.
 
+    Two ways this file has actually been broken:
+
     A multi-line description is an array of lines in DataModelSchema and a
     single string with newlines in UnappliedChanges. Setting both from one list
     produces a file that opens as "encrypted or corrupted", with the real cause
@@ -59,6 +61,14 @@ def check_field_types(unapplied):
 
         Error reading string. Unexpected token: StartArray.
         Path 'queries[1].description'
+
+    And lastLoadedAsTableFormulaText looks like M but is a JSON envelope,
+    {"IncludesReferencedQueries":..., "RootFormulaText":"let ..."}. Writing the
+    query text straight into it gives:
+
+        Unexpected character encountered while parsing value: l
+
+    "l" being the start of "let", from GetPackagePathFromUnappliedChanges.
 
     `text` is legitimately an array. Everything else here should be scalar.
     """
@@ -71,6 +81,27 @@ def check_field_types(unapplied):
                 problems.append(
                     f"queries[{i}] {q.get('name')}.{key} is "
                     f"{type(value).__name__}, expected a scalar")
+
+        raw = q.get("lastLoadedAsTableFormulaText")
+        if raw is None:
+            continue
+        if not isinstance(raw, str):
+            problems.append(
+                f"queries[{i}] {q.get('name')}.lastLoadedAsTableFormulaText "
+                f"is {type(raw).__name__}, expected a JSON string")
+            continue
+        try:
+            envelope = json.loads(raw)
+        except ValueError:
+            problems.append(
+                f"queries[{i}] {q.get('name')}.lastLoadedAsTableFormulaText "
+                f"is not valid JSON (starts {raw.lstrip()[:12]!r}) - it is a "
+                f"JSON envelope, not raw M")
+            continue
+        if "RootFormulaText" not in envelope:
+            problems.append(
+                f"queries[{i}] {q.get('name')}.lastLoadedAsTableFormulaText "
+                f"has no RootFormulaText member")
     return problems
 
 
