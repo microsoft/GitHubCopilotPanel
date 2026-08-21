@@ -94,3 +94,22 @@ in the report and it takes ten seconds — edit `deep_user_threshold`, refresh, 
 the viewer watch the subtitles and the verdict restate themselves.
 
 Don't narrate the sample figures as findings. They are synthetic.
+
+**Better: don't narrate them at all.** `make_video.py` carries a narration rule
+saying so. Every viewer's numbers will be different, so a spoken "twelve hundred
+active users" is wrong for everyone except the sample, and it dates the video the
+moment the sample is regenerated. Describe what a page *answers*, not what it
+currently *says*. The visuals can show sample data; the voice should not quote it.
+
+## Voice
+
+The committed video uses **`en-US-BrianMultilingualNeural`** via `edge-tts`, from
+Microsoft's conversational "Copilot" voice family.
+
+ValueLens and ConsumptionCentral use an en-GB voice from the older read-aloud
+engine, which is noticeably more synthetic. There is no en-GB voice in the
+conversational family, so this trades accent consistency for delivery. If you
+would rather match the other two repos, `en-GB-RyanNeural` is the closest.
+
+To change it, edit `VOICE` at the top of `make_video.py` and re-run. The narration
+text lives in the same file, so a wording change is a diff rather than a re-record.

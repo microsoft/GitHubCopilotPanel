@@ -6,13 +6,22 @@ video with an AAC narration track, static slides with hard cuts.
 
 Those two were checked rather than guessed. 36 of 39 consecutive frame pairs
 sampled from ConsumptionCentral's demo are pixel-identical, so it is a slide
-assembly and not a screen recording. Their narrator sits at a median F0 of
-120Hz and 117Hz respectively; en-GB-ThomasNeural measures 121Hz, which is why
-it is the voice here.
+assembly and not a screen recording.
+
+The voice is en-US-BrianMultilingualNeural, from Microsoft's conversational
+"Copilot" voice family. The older en-GB voices used on the other two repos
+read noticeably more synthetic; there is no en-GB voice in the conversational
+family, so accent consistency was traded for delivery.
 
     python docs/scripts/make_video.py <frames-folder>
 
-Frames come from docs/scripts/pdf export - see PREVIEW.md.
+Frames come from a PDF export of the report - see PREVIEW.md.
+
+NARRATION RULE: this is a template, and the frames show synthetic sample data.
+The script must never quote a figure from them. Every viewer's numbers will be
+different, so a spoken "twelve hundred active users" is wrong for everyone
+except the sample, and it dates the video the moment the sample is regenerated.
+Describe what a page answers, not what it currently says.
 """
 import shutil
 import subprocess
@@ -20,7 +29,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-VOICE = "en-GB-ThomasNeural"
+VOICE = "en-US-BrianMultilingualNeural"
 CANVAS = "1920:1080"
 BG = "0xF6F8FB"          # the report's own canvas colour, so the pillarbox vanishes
 TAIL = 0.9               # seconds of held frame after the line ends
@@ -28,37 +37,38 @@ TAIL = 0.9               # seconds of held frame after the line ends
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "media" / "GitHubCopilotPanel-Demo.mp4"
 
-# One beat per page. Written to be spoken, not read - short sentences, no
-# subordinate clauses, and the numbers said as words so the voice does not
-# stumble on "1,236".
+# One beat per page. Written to be spoken, not read - short sentences and no
+# subordinate clauses. No figures: see the narration rule above.
 SEGMENTS = [
     ("00-start.png",
      "Every Copilot dashboard tells you that usage went up. "
      "None of them tell you whether the work actually changed. "
      "GitHub Copilot Panel is a Power BI template that answers that question, "
-     "in seven pages, built on the Viva Insights GitHub Copilot export."),
+     "in seven pages, built on the Viva Insights GitHub Copilot export. "
+     "The figures you're about to see are synthetic sample data."),
 
     ("01-exec.png",
      "The executive summary is the whole story in one screen. "
-     "Fourteen hundred developers licensed. Twelve hundred and thirty six active. "
-     "Eight hundred and ninety habitual. Two hundred and two working deeply. "
-     "Widely deployed. Not yet used deeply."),
+     "How many developers you licensed, how many actually use it, "
+     "how many built a habit, and how many went deep. "
+     "Each step is a smaller population than the last, "
+     "and the gap between them is the story."),
 
     ("02-reach.png",
-     "Reach narrows the population in three steps. Licensed, then active, "
-     "then habitual, meaning active in at least three of the last four weeks. "
+     "Reach covers the first two steps. Active means they used it at all. "
+     "Habitual means they used it in at least three of the last four weeks. "
      "Activation is the easy part. Habit is the first real filter, "
-     "and it is where most estates quietly lose people."),
+     "and it's where most estates quietly lose people."),
 
     ("03-depth.png",
      "Depth is the page that matters. Delegation rate separates Copilot "
      "finishing your line from Copilot doing the task. "
-     "It is the one behaviour in this export that plausibly tracks a change "
-     "in output, and it is why the value model keys on it."),
+     "It's the one behaviour in this export that plausibly tracks a change "
+     "in output, and it's why the value model keys on it."),
 
     ("04-value.png",
      "Value turns depth into capacity, measured in full time equivalents, "
-     "and then into money. Two things to say out loud. "
+     "and then into money. Two things worth saying out loud. "
      "Capacity is output equivalence, not savings. Nobody's headcount goes down. "
      "And the uplift behind it is an assumption you set, "
      "not a finding this data measured."),
@@ -66,15 +76,15 @@ SEGMENTS = [
     ("05-models.png",
      "Models and stacks shows where the work is routed and which languages "
      "it lands in. Agent adoption here is GitHub's own flag. "
-     "It is the only external benchmark in the export, so when it disagrees "
-     "with our own deep user test, trust neither until you know why."),
+     "It's the only external benchmark in the export, so when it disagrees "
+     "with your own deep user test, trust neither until you know why."),
 
     ("06-appendix.png",
-     "Every assumption lives in one config table. Change a threshold and every "
-     "subtitle, verdict and narrative rewrites itself. "
-     "Nothing numeric is hardcoded in a visual. "
-     "The template is on GitHub with synthetic sample data, "
-     "so you can see it working today."),
+     "Every assumption lives in one config table. "
+     "Change a threshold and every subtitle, verdict and narrative "
+     "rewrites itself. Nothing numeric is hardcoded in a visual. "
+     "Point it at your own export, and the report reads your estate "
+     "instead of the sample."),
 ]
 
 
