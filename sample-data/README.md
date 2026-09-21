@@ -3,7 +3,14 @@
 **Synthetic. Illustrative only. Not real tenant data.**
 
 200 people across 16 organisations, 26 weekly periods (15 February – 9 August 2026),
-schema-identical to the Viva Insights GitHub Copilot export.
+schema-identical to the Viva Insights **GitHub Copilot Export** (Weekly, De-identified)
+query output.
+
+It carries the **full** org attribute set and the `true`/`false` form of
+`Agent adoption`. Real tenants vary on both, and the loader handles that: absent
+`PeopleMetaData` attributes load as blank rather than failing, and `Agent adoption` is
+also accepted as `1`/`0` or `yes`/`no`. See
+[docs/DATA-SOURCES.md](../docs/DATA-SOURCES.md#schema-tolerance--what-varies-between-tenants).
 
 `config[is_synthetic] = 1` in the shipping template, which drives a provenance banner on
 the appendix page. If you repoint the template at real data, set it to `0`.
@@ -11,7 +18,8 @@ the appendix page. If you repoint the template at real data, set it to `0`.
 ## Using it
 
 Copy these files to `C:\GitHub Copilot Panel\Data` — the shipping default for the
-`DataFolder` parameter — then open the template and load.
+`DataFolder` parameter — then open the template and load. Keep them **flat**; the loader
+reads `DataFolder\<file>.csv` and does not search subfolders.
 
 ## What is here
 

@@ -2,8 +2,8 @@
 
 **A Power BI template for GitHub Copilot adoption, engagement depth and realised value.**
 
-Built on the Viva Insights **GitHub Copilot** query output. One template, two ways to
-feed it: a local CSV export, or the Viva Insights connector direct.
+Built on the Viva Insights **GitHub Copilot Export** query output. One template, two ways
+to feed it: a local CSV export, or the Viva Insights connector direct.
 
 Seven pages, 120 measures, every assumption in one table.
 
@@ -38,6 +38,12 @@ it for real data.
 
 Pointing it at your own data means changing **one parameter**. See
 [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md).
+
+The loader is built to survive tenant variation: it selects columns by name rather than
+position, the optional `PeopleMetaData` org attributes degrade to blank instead of
+failing the refresh, and `Agent adoption` is accepted as `true`/`false`, `1`/`0` or
+`yes`/`no`. Put the six CSVs in a **flat folder** — some exports arrive nested one level
+down, in which case point `DataFolder` at the inner folder.
 
 ---
 
