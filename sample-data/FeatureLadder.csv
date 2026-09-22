@@ -1,0 +1,13 @@
+Feature,Rung,RungOrder
+code_completion,Suggest,1
+chat_inline,Suggest,1
+chat_panel_ask_mode,Suggest,1
+chat_panel_unknown_mode,Suggest,1
+others,Suggest,1
+chat_panel_edit_mode,Edit,2
+chat_panel_custom_mode,Edit,2
+agent_edit,Edit,2
+chat_panel_plan_mode,Review,3
+copilot_app,Review,3
+chat_panel_agent_mode,Delegate,4
+copilot_cli,Delegate,4

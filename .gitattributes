@@ -1,0 +1,11 @@
+# The template is a zip. Git must never touch it, and a diff of it is noise.
+*.pbit binary
+
+# Leave sample CSVs exactly as generated. Git's LF->CRLF round trip rewrites
+# every line of a 4.5MB file, so a commit that changes nothing still shows
+# 38,000 modified lines and buries whatever actually changed.
+*.csv -text
+
+*.py text eol=lf
+*.md text eol=lf
+*.yml text eol=lf

@@ -1,0 +1,45 @@
+# Power BI Desktop
+*.pbix
+*.pbip.tmp
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Real exports must never be committed. These are the file names the Viva
+# Insights GitHub Copilot query produces, so an analyst dropping their own
+# export into the repo root is caught here rather than at review.
+/Data/
+/data/
+*Identified*.zip
+GitHub_*.zip
+/PersonGitHubActivityMetrics.csv
+/GitHubActivityBreakdownByFeatureMetrics.csv
+/GitHubActivityBreakdownByModelFeatureMetrics.csv
+/GitHubActivityBreakdownByLanguageFeatureMetrics.csv
+/GitHubActivityBreakdownByLanguageModelMetrics.csv
+/PeopleMetaData.csv
+
+# ...but the synthetic sample set is the point of the repo. The rules above are
+# anchored with a leading slash so they only bite at the root and cannot reach
+# in here. Without that anchoring, "PeopleMetaData.csv" matches at every depth
+# and silently drops a shipped sample file.
+!sample-data/*.csv
+
+# OS / editor
+Thumbs.db
+.DS_Store
+desktop.ini
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# PBIP working projects. The deliverable is the .pbit, not the project.
+# A project keeps parameter VALUES on disk, so committing one publishes whatever
+# tenant identifiers or local paths were last used. Template export strips them.
+*.pbip
+*.Report/
+*.SemanticModel/
