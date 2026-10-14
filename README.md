@@ -13,7 +13,9 @@ Seven pages, 120 measures, every assumption in one table.
 
 **Intro — what the report covers, page by page** *(2m 18s)*
 
-https://github.com/user-attachments/assets/4d1b5755-4ecf-4ea1-9510-abf983874fb6
+[![Watch the intro on YouTube](https://img.youtube.com/vi/EwzHwbXsWoU/maxresdefault.jpg)](https://youtu.be/EwzHwbXsWoU)
+
+**▶ [Watch on YouTube](https://youtu.be/EwzHwbXsWoU)**
 
 ---
 
