@@ -9,6 +9,10 @@ Seven pages, 120 measures, every assumption in one table.
 
 ![GitHub Copilot Panel](Images/GitHubCopilotPanel-Preview.gif)
 
+**Also see [Analytics Hub for Microsoft Copilot](https://github.com/microsoft/AnalyticsHub-Dashboard):**
+one installer sets up an app on Microsoft Fabric or Azure that shows Copilot and agent
+adoption, value, consumption and governance in one place.
+
 ## Watch first
 
 **Intro — what the report covers, page by page** *(2m 18s)*
