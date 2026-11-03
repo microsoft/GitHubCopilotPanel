@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub Copilot Panel — interactive demo (synthetic data)</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header id="bar">
+  <strong>GitHub Copilot Panel</strong><span class="pill">Interactive demo · Synthetic data · No sign-in</span>
+  <span class="grow"></span>
+  <button id="resetf" type="button">Reset filters</button>
+  <button id="assume-btn" type="button">Assumptions</button>
+  <button id="about-btn" type="button">About this demo</button>
+</header>
+<div id="chip" hidden><span></span><button id="clear" type="button" aria-label="Clear selection">Clear selection ✕</button></div>
+<main id="stage"><div id="frame"><div id="canvas"></div></div></main>
+<footer><nav id="tabs"></nav><div id="status"></div></footer>
+<div id="tip" hidden></div>
+<dialog id="about">
+  <h2>About this demo</h2>
+  <p>A standalone browser port of the <em>GitHub Copilot Panel</em> Power BI template: the same seven pages, layout and calculations, running entirely in your browser. There is no Power BI service, sign-in or network request.</p>
+  <ul>
+    <li><b>All data is synthetic.</b> 200 invented people, 26 weekly periods. No real person, organisation or telemetry is represented.</li>
+    <li>Measures are a JavaScript port of the template's DAX. Group By, slicers and the date range work as in the report; clicking a bar or table row cross-filters the page.</li>
+    <li><b>Value page:</b> money figures (capacity, value, investment, ROI) are assumption-based what-ifs driven by the Assumptions panel — a demo-only control. Measured figures are labelled as such.</li>
+    <li>The Language option of Group By is omitted: it has no effect on person-level measures.</li>
+    <li>Source, base revision and licence (MIT) are in <a href="provenance.json">provenance.json</a>.</li>
+  </ul>
+  <button data-close type="button">Close</button>
+</dialog>
+<dialog id="assume">
+  <h2>Assumptions (demo only)</h2>
+  <p class="mute">Edit the template's config values and every figure follows. Synthetic what-ifs, not findings.</p>
+  <div id="assume-body"></div>
+  <button id="reset" type="button">Reset to defaults</button> <button data-close type="button">Close</button>
+</dialog>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

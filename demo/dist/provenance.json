@@ -1,0 +1,11 @@
+{
+  "demo": "GitHub Copilot Panel – interactive browser demo (synthetic data)",
+  "baseRevision": "962df65ec8fb2eca3a422133a17f42aa202abf1f",
+  "baseTemplateTree": "source-modified",
+  "files": {
+    "assets/app.js": "665bf302e24ff01711dcbad84d660b0af67276b12efb8795714a128c254b5eaf",
+    "assets/data.js": "edce8193fac8c79db2e6139ae0cf7c388b6a735cd33e4c89ad1d5510ed6e61a6",
+    "assets/styles.css": "5e873de5416d9eddd894dd17fd09a389261f412d0ef15b1284bcfd39b1bc413b",
+    "index.html": "dafffbb07a9ecbea7808bb09589ad00986481827772d6a28889250596b6c2604"
+  }
+}
