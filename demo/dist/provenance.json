@@ -1,8 +1,13 @@
 {
   "demo": "GitHub Copilot Panel – interactive browser demo (synthetic data)",
+  "repository": "microsoft/GitHubCopilotPanel",
   "baseRevision": "962df65ec8fb2eca3a422133a17f42aa202abf1f",
-  "baseTemplateTree": "source-modified",
+  "buildRevision": "255af74e1401d86c21d9ebbec0d0f69d4ef6c850",
+  "templateAndDataVsBuildRevision": "modified",
+  "demoSourceState": "committed",
+  "licence": "MIT (see LICENSE)",
   "files": {
+    "LICENSE": "1743f7eb0460acc50176f7e1bca99f6a43651d9f3f48ff5e64fc46f8c08ef78e",
     "assets/app.js": "665bf302e24ff01711dcbad84d660b0af67276b12efb8795714a128c254b5eaf",
     "assets/data.js": "edce8193fac8c79db2e6139ae0cf7c388b6a735cd33e4c89ad1d5510ed6e61a6",
     "assets/styles.css": "5e873de5416d9eddd894dd17fd09a389261f412d0ef15b1284bcfd39b1bc413b",
