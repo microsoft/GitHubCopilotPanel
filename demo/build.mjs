@@ -111,16 +111,20 @@ fs.writeFileSync(path.join(dist, 'assets', 'app.js'), '(function(){\n"use strict
 fs.copyFileSync(path.join(src, 'styles.css'), path.join(dist, 'assets', 'styles.css'));
 fs.copyFileSync(path.join(src, 'index.html'), path.join(dist, 'index.html'));
 
-let rev = 'unknown', dirty = 'unknown';
+const BASE = '962df65ec8fb2eca3a422133a17f42aa202abf1f';
+fs.copyFileSync(path.join(root, 'LICENSE'), path.join(dist, 'LICENSE'));
+let rev = 'unknown', dirty = 'unknown', demoSrc = 'unknown';
 try {
   rev = execSync('git rev-parse HEAD', { cwd: root }).toString().trim();
-  dirty = execSync('git status --porcelain -- . ":(exclude)demo"', { cwd: root }).toString().trim() ? 'source-modified' : 'clean';
+  dirty = execSync('git status --porcelain -- . ":(exclude)demo"', { cwd: root }).toString().trim() ? 'modified' : 'unchanged-from-build-revision';
+  demoSrc = execSync('git status --porcelain -- demo/src demo/build.mjs', { cwd: root }).toString().trim() ? 'uncommitted-changes' : 'committed';
 } catch { /* not a git checkout */ }
 const files = [];
 (function walk(d) { for (const f of fs.readdirSync(d).sort()) { const p = path.join(d, f); fs.statSync(p).isDirectory() ? walk(p) : files.push(p); } })(dist);
 const manifest = {
   demo: 'GitHub Copilot Panel – interactive browser demo (synthetic data)',
-  baseRevision: rev, baseTemplateTree: dirty,
+  repository: 'microsoft/GitHubCopilotPanel', baseRevision: BASE, buildRevision: rev,
+  templateAndDataVsBuildRevision: dirty, demoSourceState: demoSrc, licence: 'MIT (see LICENSE)',
   files: Object.fromEntries(files.map(f => [path.relative(dist, f).replaceAll('\\', '/'), crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')])),
 };
 fs.writeFileSync(path.join(dist, 'provenance.json'), JSON.stringify(manifest, null, 2) + '\n');
