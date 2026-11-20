@@ -1,9 +1,8 @@
 name: Checks
 
 # The template is a binary, so nothing here can prove it renders. What these
-# checks can do is catch the three things that have actually gone wrong:
-# a parameter shipping with a real value in it, the two query lists inside the
-# .pbit falling out of step, and a real export being committed as sample data.
+# checks can do is catch incorrect parameters or Viva table names, query lists
+# falling out of step, and a real export being committed as sample data.
 
 on:
   push:
@@ -26,6 +25,9 @@ jobs:
 
       - name: The two query lists inside the template agree
         run: python docs/scripts/check_unapplied_sync.py "GitHub Copilot Panel.pbit"
+
+      - name: Viva table names and CSV branches are preserved
+        run: python docs/scripts/check_viva_table_names.py "GitHub Copilot Panel.pbit"
 
       - name: Sample data carries no real identifiers
         run: |

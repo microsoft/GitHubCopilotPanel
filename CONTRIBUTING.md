@@ -20,11 +20,10 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 ## What's most useful
 
-**The Viva connector table names.** This is the biggest open gap. Omitting `TableName`
-returns the query's primary table and works, but the API table names are not the CSV file
-names, and the other five tables need their exact strings before the direct route is
-complete. If you find them via **Get Data → Viva Insights** in Desktop, an issue with the
-navigator's list would finish that feature for everyone.
+**The Viva connector table names.** The weekly, de-identified route uses the six full
+connector names in [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md), not the CSV filenames
+or shortened Power BI display names. If you test another query variant, verify its API
+names against the Microsoft documentation and keep its mapping separate.
 
 **Corrections to the click-paths.** The Viva Insights portal moves. If a path in
 [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md) no longer matches what you see, that is a

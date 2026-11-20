@@ -1,11 +1,12 @@
 # Testing
 
-Two scripts, run locally and in CI. Each exists because of a specific failure, and the
+Three scripts, run locally and in CI. Each exists because of a specific failure, and the
 docstring in each names it.
 
 ```
 python docs/scripts/check_pbit_defaults.py "GitHub Copilot Panel.pbit"
 python docs/scripts/check_unapplied_sync.py "GitHub Copilot Panel.pbit"
+python docs/scripts/check_viva_table_names.py "GitHub Copilot Panel.pbit"
 ```
 
 ---
@@ -21,6 +22,13 @@ python docs/scripts/check_unapplied_sync.py "GitHub Copilot Panel.pbit"
 
 The all-zero GUID is whitelisted deliberately — it is the documented placeholder, so the
 check that catches real GUIDs has to let it through.
+
+## `check_viva_table_names.py`
+
+Checks that all six Viva partitions use the full weekly, de-identified connector table
+names in `DataModelSchema`, `UnappliedChanges`, and each loaded-formula envelope. It also
+checks that every query retains its existing CSV branch and filename, and that the
+Language dimension uses the Viva query in Viva mode.
 
 ## `check_unapplied_sync.py`
 

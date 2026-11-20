@@ -130,18 +130,19 @@ unpivoted schema and aggregated granularity are no longer supported.
 
 ### Table names for the connector route
 
-The API table names are **not** the CSV file names. They are documented under
-[Queries with multi-table outputs](https://learn.microsoft.com/en-us/viva/insights/advanced/analyst/export-query-data-microsoft-fabric#queries-with-multi-table-outputs)
-and map one-to-one onto the six files:
+The API table names are **not** the CSV file names or necessarily the display
+names in Power BI. For the weekly, de-identified query this template uses,
+`TableName` must be the full source-table name from
+[Microsoft's multi-table output list](https://learn.microsoft.com/en-us/viva/insights/advanced/analyst/export-query-data-microsoft-fabric#queries-with-multi-table-outputs):
 
-| CSV file | `TableName` suffix |
+| CSV file | `TableName` |
 |---|---|
-| `PeopleMetaData.csv` | `_HR` |
-| `PersonGitHubActivityMetrics.csv` | `_GitHubCopilotActivity` |
-| `GitHubActivityBreakdownByLanguageModelMetrics.csv` | `_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Language_Model` |
-| `GitHubActivityBreakdownByModelFeatureMetrics.csv` | `_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Model_Feature` |
-| `GitHubActivityBreakdownByLanguageFeatureMetrics.csv` | `_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Language_Feature` |
-| `GitHubActivityBreakdownByFeatureMetrics.csv` | `_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Feature` |
+| `PeopleMetaData.csv` | `GitHubCopilotWeeklyExportData_HR` |
+| `PersonGitHubActivityMetrics.csv` | `GitHubCopilotWeeklyExportData_GitHubCopilotActivity` |
+| `GitHubActivityBreakdownByFeatureMetrics.csv` | `GitHubCopilotWeeklyExportData_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Feature` |
+| `GitHubActivityBreakdownByModelFeatureMetrics.csv` | `GitHubCopilotWeeklyExportData_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Model_Feature` |
+| `GitHubActivityBreakdownByLanguageFeatureMetrics.csv` | `GitHubCopilotWeeklyExportData_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Language_Feature` |
+| `GitHubActivityBreakdownByLanguageModelMetrics.csv` | `GitHubCopilotWeeklyExportData_GitHubCopilotBreakdownActivity_by_PersonId_MetricDate_Language_Model` |
 
 The prefix depends on which of the four queries you ran:
 
@@ -152,13 +153,10 @@ The prefix depends on which of the four queries you ran:
 | Weekly, identified | `IdentifiableGitHubCopilotWeeklyExportData` |
 | Daily, identified | `IdentifiableGitHubCopilotDailyExportData` |
 
-So the weekly de-identified activity table is
-`GitHubCopilotWeeklyExportData_GitHubCopilotActivity`.
-
-The template ships with the **CSV file names** in its `TableName` options, which
-is what the shipped Viva branch sends. Until those are swapped for the strings
-above, the Viva route returns the query's primary table for every query. Fix it
-in the query editor, or stay on the CSV route.
+The six values above are the connector table names for this template's weekly,
+de-identified route. Do not substitute CSV filenames or the table names for a
+different query variant. The CSV route remains unchanged and continues to read
+the six local files listed above.
 
 ---
 
