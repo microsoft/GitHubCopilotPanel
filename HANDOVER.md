@@ -125,12 +125,12 @@ validate, commit and cut v1.1.0.
 
 ## Open, lower priority
 
-- **Viva connector table names.** Only the primary table resolves without an
-  explicit `TableName`; the other five need their exact API strings, which are not
-  the CSV file names. Discoverable via Get Data → Viva Insights in Desktop.
+- **Viva connector table names.** The six weekly, de-identified source names are now
+  mapped in the template instead of passing CSV filenames or shortened Power BI display
+  names to `TableName`. The template's initial load completed in Viva mode and the
+  report displayed live data. The CSV route does not verify the direct route.
 - **`deep_user_uplift` still in `config`.** Unused by the new model, kept so the
   measure has a fallback. Delete once the cards are repointed.
-- **The template has never been refreshed against real tenant data.**
 
 ## Where things are
 
